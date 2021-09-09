@@ -1,0 +1,34 @@
+{
+  "name": "octo",
+  "version": "octo 0.0.1",
+  "description": "A tool that allows you to generate static sites based off of text data.",
+  "main": "bin/app.js",
+  "bin": {
+    "octo": "./bin/app.js"
+  },
+  "scripts": {
+    "start": "node ./bin/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LuigiZaccagnini/octo.git"
+  },
+  "keywords": [
+    "ssg",
+    "static",
+    "site",
+    "generator"
+  ],
+  "author": "Luigi Zaccagnini",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/LuigiZaccagnini/octo/issues"
+  },
+  "homepage": "https://github.com/LuigiZaccagnini/octo#readme",
+  "dependencies": {
+    "boxen": "4.0",
+    "chalk": "2.4",
+    "yargs": "13.2"
+  }
+}
