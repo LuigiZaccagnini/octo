@@ -138,3 +138,7 @@ dist
 # Folder With Testing Data
 
 test/
+
+# Random Gen File
+
+.DS_Store
