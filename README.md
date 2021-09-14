@@ -8,13 +8,16 @@ command. If you don't want to install Octo globally, you can follow the non-glob
 <ul>
     <li>Clone the repository</li>
     <li><code>cd</code> into the folder</li>
+    <li>run <code>npm i</code> to install all dependencies</li>
     <li>run <code>npm install -g .</code></li>
 </ul>
 
 <h3>Non-Global</h3>
 <ul>
     <li>Clone the repository</li>
-    <li><code>cd</code> into the folder and go to <code>bin</code></li>
+    <li><code>cd</code> into the folder</li>
+    <li>run <code>npm i</code> to install all dependencies</li>
+    <li><code>cd</code> into the <code>bin</code></li>
     <li>run <code>node app</code></li>
 </ul>
 
