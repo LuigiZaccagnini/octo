@@ -1,8 +1,6 @@
 #!/usr/bin/env node
-const fs = require(`fs`);
 const yargs = require(`yargs`);
-const ff = require(`./fileFunctions`);
-const pathModule = require(`path`);
+const package = require(`../package.json`);
 
 const options = yargs
   .usage(`Usage: -i <path>`)
@@ -19,7 +17,7 @@ const options = yargs
   })
   .help("h")
   .alias("h", "help")
-  .version()
+  .version(`octo ${package.version}`)
   .alias(`v`, `version`).argv;
 
 addDirectory(options.output ? options.output : `./dist`);
