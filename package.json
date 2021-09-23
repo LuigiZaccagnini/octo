@@ -1,6 +1,6 @@
 {
   "name": "octo",
-  "version": "octo 0.0.1",
+  "version": "0.0.1",
   "description": "A tool that allows you to generate static sites based off of text data.",
   "main": "bin/app.js",
   "bin": {
