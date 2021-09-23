@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-const fs = require(`fs`);
 const yargs = require(`yargs`);
-const ff = require(`./fileFunctions`);
-const pathModule = require(`path`);
+const package = require(`../package.json`);
 
+//Import fileFunctions
+const fileFunctions = require("./fileFunctions");
 const options = yargs
   .usage(`Usage: -i <path>`)
   .option(`input`, {
@@ -19,12 +19,13 @@ const options = yargs
   })
   .help("h")
   .alias("h", "help")
-  .version()
+  .version(`octo ${package.version}`)
   .alias(`v`, `version`).argv;
 
-addDirectory(options.output ? options.output : `./dist`);
+//Using fileFuntions methods
+fileFunctions.addDirectory(options.output ? options.output : `./dist`);
 
-getPathInfo(
+fileFunctions.getPathInfo(
   `${options.input}`,
   `${options.output ? options.output : `./dist`}`
 );
