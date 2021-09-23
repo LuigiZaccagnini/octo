@@ -56,6 +56,57 @@ command. If you don't want to install Octo globally, you can follow the non-glob
     octo -i test.txt -o ../hmtlFiles
 </pre>
 
+<h3>Markdown File Input</h3>
+<p>If a markdown file <code>.md</code> is input, the tool will convert all markdown features into appropriate HTML tags. For now, it only converts <code>#</code> into <code>h1</code></p>
+<h4>Example</h4>
+
+<h5>Input</h5>
+<pre>
+    octo -i markdown.md
+</pre>
+
+<pre>
+Hello This is Markdown file
+
+
+How are you?
+
+# This text is Markdown text
+
+#This is not Markdown text since it has a whitespace before "This" and "#"
+
+Another text.
+# This is another Markdown Text
+
+End of file has been reach.
+</pre>
+
+<h5>Output</h5>
+
+```
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Filename</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <h1>Hello This is Markdown file</h1>
+        <p>How are you?</p>
+        <br />
+        <h1>This text is Markdown text</h1>
+        <br />
+        <p>#This is not Markdown text since it has a whitespace between "This" and "#"</p>
+        <br />
+        <p>Another text.</p>
+        <h1>This is another Markdown Text</h1>
+        <br />
+        <p>End of file has been reach.</p>
+    </body>
+</html>
+```
+
 <h3>Recursive File Searching</h3>
 <p>If a input is a directory, Octo will recursively go through all the child directories and convert all 
-    the text files into HTML.</p>
+    the text and Markdown files into HTML.</p>
