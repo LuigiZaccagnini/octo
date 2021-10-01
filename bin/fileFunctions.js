@@ -33,7 +33,7 @@ const addDirectory = (directory) => {
 const writeFile = (file, content, output) => {
   fs.writeFile(`${output}/${file}`, content, (err) => {
     if (err) {
-      console.error(err);
+      console.error(`This is the write file error \n${err}\n`);
     }
   });
 };
@@ -43,7 +43,7 @@ const writeFile = (file, content, output) => {
  * @param    {String} path          Path to the text file that will be converted to HTML
  * @return   {String}               Text that is converted into HTML
  */
-const textToHTML = async (path) => {
+const textToHTML = async (path, lang) => {
   let firstLine = true;
   let doc = ``;
   let paragraph = ``;
@@ -52,7 +52,7 @@ const textToHTML = async (path) => {
     input: fs.createReadStream(path, { encoding: "utf8" }),
   });
 
-  doc += `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Filename</title><meta name="viewport" content="width=device-width, initial-scale=1"></head><body>`;
+  doc += `<!doctype html><html lang="${lang}"><head><meta charset="utf-8"><title>Filename</title><meta name="viewport" content="width=device-width, initial-scale=1"></head><body>`;
 
   lineReader.on("line", function (line) {
     if (line !== `` && firstLine) {
@@ -74,7 +74,7 @@ const textToHTML = async (path) => {
   return doc;
 };
 
-const textToHTMLFixed = async (path) => {
+const textToHTMLFixed = async (path, lang) => {
   let firstLine = true;
   let doc = ``;
   let paragraph = ``;
@@ -83,7 +83,7 @@ const textToHTMLFixed = async (path) => {
     input: fs.createReadStream(path, { encoding: "utf8" }),
   });
 
-  doc += `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Filename</title><meta name="viewport" content="width=device-width, initial-scale=1"></head><body>`;
+  doc += `<!doctype html><html lang="${lang}"><head><meta charset="utf-8"><title>Filename</title><meta name="viewport" content="width=device-width, initial-scale=1"></head><body>`;
 
   lineReader.on("line", function (line) {
     //fixed code
@@ -115,7 +115,7 @@ const isMarkdown = (text) => {
 };
 
 //This function will call when .md is input
-const textToHTMLWithMarkdown = async (path) => {
+const textToHTMLWithMarkdown = async (path, lang) => {
   let firstLine = true;
   let doc = ``;
   let paragraph = ``;
@@ -124,7 +124,7 @@ const textToHTMLWithMarkdown = async (path) => {
     input: fs.createReadStream(path, { encoding: "utf8" }),
   });
 
-  doc += `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Filename</title><meta name="viewport" content="width=device-width, initial-scale=1"></head><body>`;
+  doc += `<!doctype html><html lang="${lang}"><head><meta charset="utf-8"><title>Filename</title><meta name="viewport" content="width=device-width, initial-scale=1"></head><body>`;
 
   lineReader.on("line", function (line) {
     if (isMarkdown(line)) {
@@ -152,20 +152,20 @@ const textToHTMLWithMarkdown = async (path) => {
  * @param    {String} path          Path to the text file that will be converted to HTML
  * @param    {String} output        Output path for the all the files
  */
-const getPathInfo = (path, output) => {
+const getPathInfo = (path, output, lang) => {
   fs.lstat(path, (err, stats) => {
-    if (err) return console.log(err);
+    if (err) return console.log(`This is getPathInfo Error \n${err}`);
 
     if (stats.isDirectory()) {
       fs.readdirSync(path).forEach((file) => {
-        getPathInfo(`${path}/${file}`, output);
+        getPathInfo(`${path}/${file}`, output, lang);
       });
     }
 
     if (stats.isFile()) {
       //Added code to check file input extension
       if (path.includes(".txt")) {
-        return textToHTMLFixed(path).then((data) => {
+        return textToHTMLFixed(path, lang).then((data) => {
           let doc = data; //Added let before doc since it has not been declared
           writeFile(pathModule.basename(path, ".txt") + ".html", doc, output);
         });
@@ -173,7 +173,7 @@ const getPathInfo = (path, output) => {
 
       //Check if the file is .md file
       if (path.includes(".md")) {
-        return textToHTMLWithMarkdown(path).then((data) => {
+        return textToHTMLWithMarkdown(path, lang).then((data) => {
           let doc = data; //Added let before doc since it has not been declared
           writeFile(pathModule.basename(path, ".md") + ".html", doc, output);
         });
