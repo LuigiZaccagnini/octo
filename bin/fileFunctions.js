@@ -133,6 +133,8 @@ const textToHTMLWithMarkdown = async (path, lang) => {
       if (line !== "" && firstLine) {
         doc += `<h1>${line}</h1>`;
         firstLine = false;
+      } else if (line === `---`) {
+        doc += `<hr>`;
       } else if (line !== "" && !firstLine) {
         doc += `<p>${line}</p>`;
         paragraph += `${line}`;
