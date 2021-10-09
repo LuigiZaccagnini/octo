@@ -2,6 +2,7 @@ const fs = require(`fs`);
 const pathModule = require("path");
 const readline = require(`readline`);
 const { once } = require("events");
+const path = require("path");
 
 /**
  * Function that creates a directory at the given path
@@ -180,9 +181,40 @@ const getPathInfo = (path, output, lang) => {
           writeFile(pathModule.basename(path, ".md") + ".html", doc, output);
         });
       }
-
       return console.log("The tool only supports .txt and .md files!!");
     }
+  });
+};
+
+const readJsonFile = (inputPath) => {
+  fs.readFile(inputPath, "utf8", (err, json) => {
+    if (err) {
+      console.log(err);
+      process.exit(-1);
+    }
+
+    const data = JSON.parse(json);
+    const lang = data.lang || "en-CA";
+
+    fs.stat(data.input, (err, stats) => {
+      if (err) {
+        console.log(err);
+      }
+
+      if (stats.isDirectory()) {
+        fs.readdirSync(path).forEach((file) => {
+          getPathInfo(`${path}/${file}`, output, lang);
+        });
+      } else if (stats.isFile() && path.extname(data.input) === ".txt") {
+        getPathInfo(`${path}/${file}`, output, lang);
+      } else if (stats.isFile() && path.extname(data.input) === ".md") {
+        getPathInfo(`${path}/${file}`, output, lang);
+      } else if (stats.isFile() && path.extname(data.input) === ".json") {
+        getPathInfo(`${path}/${file}`, output, lang);
+      } else {
+        console.log("The tool only supports .txt and .md files!!");
+      }
+    });
   });
 };
 
@@ -190,4 +222,5 @@ const getPathInfo = (path, output, lang) => {
 module.exports = {
   getPathInfo,
   addDirectory,
+  readJsonFile,
 };
