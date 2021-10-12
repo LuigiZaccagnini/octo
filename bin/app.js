@@ -1,8 +1,6 @@
 #!/usr/bin/env node
-const { argv, option } = require("yargs");
 const yargs = require(`yargs`);
 const package = require(`../package.json`);
-const fs = require("fs");
 
 //Import fileFunctions
 const fileFunctions = require("./fileFunctions");
@@ -12,19 +10,12 @@ const options = yargs
     alias: `i`,
     describe: `Path to file`,
     type: `string`,
-    demandOption: false,
+    demandOption: true,
   })
   .option(`output`, {
     alias: `o`,
     describe: `Output directory for html parsed files`,
     type: `string`,
-  })
-  .options(`config`, {
-    alias: `c`,
-    describe: `Configuration file`,
-    default: "",
-    type: `array`,
-    demandOption: false,
   })
   .option(`lang`, {
     alias: `l`,
@@ -38,12 +29,6 @@ const options = yargs
 
 //Using fileFuntions methods
 fileFunctions.addDirectory(options.output ? options.output : `./dist`);
-
-//ignore the rest if Configuration is specified
-const filePath = options.config || options.input;
-if (!filePath) {
-  console.log(`Please choose either -i option or -c option!!!`);
-}
 
 fileFunctions.getPathInfo(
   `${options.input}`,
