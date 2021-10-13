@@ -39,71 +39,49 @@ const writeFile = (file, content, output) => {
 };
 
 /**
+ * Function that validates a line from a file
+ * @param    {String} line          line from a file
+ * @param    {Boolean} isFirstLine  check if the line from the file is the first line
+ */
+const lineChecker = (line, isFirstLine) => {
+  let document = ``;
+
+  if (line !== "" && isFirstLine) {
+    document += `<h1>${line}</h1>`;
+  } else if (line !== "" && !isFirstLine) {
+    document += `<p>${line}</p>`;
+  } else if (line === "") {
+    document += "<br />";
+  }
+
+  return document;
+};
+
+/**
  * Function that turns text from a .txt file into HTML
  * @param    {String} path          Path to the text file that will be converted to HTML
  * @return   {String}               Text that is converted into HTML
  */
 const textToHTML = async (path, lang) => {
   let firstLine = true;
-  let doc = ``;
-  let paragraph = ``;
+  let document = `<!doctype html><html lang="${lang}"><head><meta charset="utf-8"><title>Filename</title><meta name="viewport" content="width=device-width, initial-scale=1"></head><body>`;
 
   let lineReader = readline.createInterface({
     input: fs.createReadStream(path, { encoding: "utf8" }),
   });
 
-  doc += `<!doctype html><html lang="${lang}"><head><meta charset="utf-8"><title>Filename</title><meta name="viewport" content="width=device-width, initial-scale=1"></head><body>`;
-
   lineReader.on("line", function (line) {
-    if (line !== `` && firstLine) {
-      doc += `<p>${line}`;
-      paragraph += `${line}`;
+    if (firstLine) {
+      document += lineChecker(line, firstLine);
       firstLine = false;
-    } else if (line !== `` && !firstLine) {
-      doc += `${line}`;
-      paragraph += `${line}`;
-    } else if (line === `` && paragraph !== ``) {
-      doc += `</p>`;
-      paragraph = ``;
-      firstLine = true;
+    } else {
+      document += lineChecker(line, firstLine);
     }
   });
 
   await once(lineReader, "close");
-  doc += `</p></body></html>`;
-  return doc;
-};
-
-const textToHTMLFixed = async (path, lang) => {
-  let firstLine = true;
-  let doc = ``;
-  let paragraph = ``;
-
-  let lineReader = readline.createInterface({
-    input: fs.createReadStream(path, { encoding: "utf8" }),
-  });
-
-  doc += `<!doctype html><html lang="${lang}"><head><meta charset="utf-8"><title>Filename</title><meta name="viewport" content="width=device-width, initial-scale=1"></head><body>`;
-
-  lineReader.on("line", function (line) {
-    //fixed code
-    //First line
-    if (line !== "" && firstLine) {
-      doc += `<h1>${line}</h1>`;
-      firstLine = false;
-    } else if (line !== "" && !firstLine) {
-      //not first line
-      doc += `<p>${line}</p>`;
-      paragraph += `${line}`;
-    } else if (line === "" && paragraph !== "") {
-      //Empty line
-      doc += "<br />";
-    }
-  });
-
-  await once(lineReader, "close");
-  doc += `</body></html>`;
-  return doc;
+  document += `</body></html>`;
+  return document;
 };
 
 //Function to check if the line has markdown or not
@@ -117,36 +95,28 @@ const isMarkdown = (text) => {
 //This function will call when .md is input
 const textToHTMLWithMarkdown = async (path, lang) => {
   let firstLine = true;
-  let doc = ``;
-  let paragraph = ``;
+  let document = `<!doctype html><html lang="${lang}"><head><meta charset="utf-8"><title>Filename</title><meta name="viewport" content="width=device-width, initial-scale=1"></head><body>`;
 
   let lineReader = readline.createInterface({
     input: fs.createReadStream(path, { encoding: "utf8" }),
   });
 
-  doc += `<!doctype html><html lang="${lang}"><head><meta charset="utf-8"><title>Filename</title><meta name="viewport" content="width=device-width, initial-scale=1"></head><body>`;
-
   lineReader.on("line", function (line) {
     if (isMarkdown(line)) {
-      doc += `<h1>${line.slice(2)}</h1>`;
+      document += `<h1>${line.slice(2)}</h1>`;
     } else {
-      if (line !== "" && firstLine) {
-        doc += `<h1>${line}</h1>`;
+      if (firstLine) {
+        document += lineChecker(line, firstLine);
         firstLine = false;
-      } else if (line === `---`) {
-        doc += `<hr>`;
-      } else if (line !== "" && !firstLine) {
-        doc += `<p>${line}</p>`;
-        paragraph += `${line}`;
-      } else if (line === "" && paragraph !== "") {
-        doc += "<br />";
+      } else {
+        document += lineChecker(line, firstLine);
       }
     }
   });
 
   await once(lineReader, "close");
-  doc += `</body></html>`;
-  return doc;
+  document += `</body></html>`;
+  return document;
 };
 
 /**
@@ -154,30 +124,28 @@ const textToHTMLWithMarkdown = async (path, lang) => {
  * @param    {String} path          Path to the text file that will be converted to HTML
  * @param    {String} output        Output path for the all the files
  */
-const getPathInfo = (path, output, lang) => {
+const main = (path, output, lang) => {
   fs.lstat(path, (err, stats) => {
-    if (err) return console.log(`This is getPathInfo Error \n${err}`);
+    if (err) return console.log(`This is main Error \n${err}`);
 
     if (stats.isDirectory()) {
       fs.readdirSync(path).forEach((file) => {
-        getPathInfo(`${path}/${file}`, output, lang);
+        main(`${path}/${file}`, output, lang);
       });
     }
 
     if (stats.isFile()) {
       //Added code to check file input extension
       if (path.includes(".txt")) {
-        return textToHTMLFixed(path, lang).then((data) => {
-          let doc = data; //Added let before doc since it has not been declared
-          writeFile(pathModule.basename(path, ".txt") + ".html", doc, output);
+        return textToHTML(path, lang).then((data) => {
+          writeFile(pathModule.basename(path, ".txt") + ".html", data, output);
         });
       }
 
       //Check if the file is .md file
       if (path.includes(".md")) {
         return textToHTMLWithMarkdown(path, lang).then((data) => {
-          let doc = data; //Added let before doc since it has not been declared
-          writeFile(pathModule.basename(path, ".md") + ".html", doc, output);
+          writeFile(pathModule.basename(path, ".md") + ".html", data, output);
         });
       }
 
@@ -188,6 +156,6 @@ const getPathInfo = (path, output, lang) => {
 
 //Fixed module will export functions created
 module.exports = {
-  getPathInfo,
+  main,
   addDirectory,
 };

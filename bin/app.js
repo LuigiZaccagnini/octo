@@ -30,7 +30,7 @@ const options = yargs
 //Using fileFuntions methods
 fileFunctions.addDirectory(options.output ? options.output : `./dist`);
 
-fileFunctions.getPathInfo(
+fileFunctions.main(
   `${options.input}`,
   `${options.output ? options.output : `./dist`}`,
   `${options.lang ? options.lang : `en-CA`}`
