@@ -57,7 +57,7 @@ command. If you don't want to install Octo globally, you can follow the non-glob
 </pre>
 
 <h3>Markdown File Input</h3>
-<p>If a markdown file <code>.md</code> is input, the tool will convert all markdown features into appropriate HTML tags. For now, it only converts <code>#</code> into <code>h1</code></p>
+<p>If a markdown file <code>.md</code> is input, the tool will convert all markdown features into appropriate HTML tags.</p>
 <h4>Example</h4>
 
 <h5>Input</h5>

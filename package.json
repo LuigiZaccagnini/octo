@@ -29,6 +29,7 @@
   "dependencies": {
     "boxen": "4.0",
     "chalk": "2.4",
+    "showdown": "^1.9.1",
     "yargs": "13.2"
   }
 }

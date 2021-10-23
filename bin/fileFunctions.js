@@ -2,6 +2,8 @@ const fs = require(`fs`);
 const pathModule = require("path");
 const readline = require(`readline`);
 const { once } = require("events");
+const showdown = require("showdown");
+showdown.setFlavor("github");
 
 /**
  * Function that creates a directory at the given path
@@ -12,7 +14,7 @@ const addDirectory = (directory) => {
     if (!fs.existsSync(directory)) {
       fs.mkdirSync(directory);
     } else {
-      fs.rmdirSync(directory, { recursive: true }, (err) => {
+      fs.rmSync(directory, { recursive: true }, (err) => {
         if (err) {
           throw err;
         }
@@ -84,37 +86,17 @@ const textToHTML = async (path, lang) => {
   return document;
 };
 
-//Function to check if the line has markdown or not
-const isMarkdown = (text) => {
-  if (text.match(/^[#] [0-9A-Za-z]/)) {
-    return true;
-  }
-  return false;
-};
-
 //This function will call when .md is input
 const textToHTMLWithMarkdown = async (path, lang) => {
-  let firstLine = true;
   let document = `<!doctype html><html lang="${lang}"><head><meta charset="utf-8"><title>Filename</title><meta name="viewport" content="width=device-width, initial-scale=1"></head><body>`;
 
-  let lineReader = readline.createInterface({
-    input: fs.createReadStream(path, { encoding: "utf8" }),
-  });
+  try {
+    var data = fs.readFileSync(path, "utf8");
+    document += new showdown.Converter().makeHtml(data);
+  } catch (error) {
+    console.log(error);
+  }
 
-  lineReader.on("line", function (line) {
-    if (isMarkdown(line)) {
-      document += `<h1>${line.slice(2)}</h1>`;
-    } else {
-      if (firstLine) {
-        document += lineChecker(line, firstLine);
-        firstLine = false;
-      } else {
-        document += lineChecker(line, firstLine);
-      }
-    }
-  });
-
-  await once(lineReader, "close");
   document += `</body></html>`;
   return document;
 };
