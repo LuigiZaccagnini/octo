@@ -8,7 +8,10 @@
   },
   "scripts": {
     "start": "node ./bin/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm run prettier",
+    "test": "npm run prettier-check",
+    "prettier": "prettier --write .",
+    "prettier-check": "prettier --check ."
   },
   "repository": {
     "type": "git",
@@ -31,5 +34,8 @@
     "chalk": "2.4",
     "showdown": "^1.9.1",
     "yargs": "13.2"
+  },
+  "devDependencies": {
+    "prettier": "2.4.1"
   }
 }
