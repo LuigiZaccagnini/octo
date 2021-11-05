@@ -7,9 +7,12 @@
     "octo": "./bin/app.js"
   },
   "scripts": {
+    "prepare": "husky install",
     "start": "node ./bin/app.js",
-    "build": "npm run prettier && npx eslint --fix . && npx eslint .",
-    "test": "npm run prettier-check && npx eslint .",
+    "build": "npm run prettier && npm run eslint-fix && npm run eslint",
+    "test": "npm run prettier-check && npm run eslint",
+    "eslint": "npx eslint .",
+    "eslint-fix": "eslint --fix .",
     "prettier": "prettier --write .",
     "prettier-check": "prettier --check ."
   },
