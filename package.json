@@ -8,8 +8,8 @@
   },
   "scripts": {
     "start": "node ./bin/app.js",
-    "build": "npm run prettier",
-    "test": "npm run prettier-check",
+    "build": "npm run prettier && npx eslint --fix . && npx eslint .",
+    "test": "npm run prettier-check && npx eslint .",
     "prettier": "prettier --write .",
     "prettier-check": "prettier --check ."
   },
@@ -36,6 +36,8 @@
     "yargs": "13.2"
   },
   "devDependencies": {
+    "eslint": "^8.1.0",
+    "husky": "^7.0.4",
     "prettier": "2.4.1"
   }
 }

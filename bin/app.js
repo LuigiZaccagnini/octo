@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 const yargs = require(`yargs`);
-const package = require(`../package.json`);
+const config = require(`../package.json`);
 
 //Import fileFunctions
 const fileFunctions = require("./fileFunctions");
@@ -24,7 +24,7 @@ const options = yargs
   })
   .help("h")
   .alias("h", "help")
-  .version(`octo ${package.version}`)
+  .version(`octo ${config.version}`)
   .alias(`v`, `version`).argv;
 
 //Using fileFuntions methods
