@@ -87,7 +87,7 @@ const textToHTML = async (path, lang) => {
 };
 
 //This function will call when .md is input
-const textToHTMLWithMarkdown = async (path, lang) => {
+const markdownToHTML = async (path, lang) => {
   let document = `<!doctype html><html lang="${lang}"><head><meta charset="utf-8"><title>Filename</title><meta name="viewport" content="width=device-width, initial-scale=1"></head><body>`;
 
   try {
@@ -126,7 +126,7 @@ const main = (path, output, lang) => {
 
       //Check if the file is .md file
       if (path.includes(".md")) {
-        return textToHTMLWithMarkdown(path, lang).then((data) => {
+        return markdownToHTML(path, lang).then((data) => {
           writeFile(pathModule.basename(path, ".md") + ".html", data, output);
         });
       }
