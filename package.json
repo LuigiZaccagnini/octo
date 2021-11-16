@@ -10,7 +10,8 @@
     "prepare": "husky install",
     "start": "node ./bin/app.js",
     "build": "npm run prettier && npm run eslint-fix && npm run eslint",
-    "test": "npm run prettier-check && npm run eslint",
+    "test": "jest",
+    "coverage": "jest --coverage",
     "eslint": "npx eslint .",
     "eslint-fix": "eslint --fix .",
     "prettier": "prettier --write .",
@@ -35,12 +36,14 @@
   "dependencies": {
     "boxen": "4.0",
     "chalk": "2.4",
+    "react-test-renderer": "^17.0.2",
     "showdown": "^1.9.1",
     "yargs": "13.2"
   },
   "devDependencies": {
     "eslint": "^8.1.0",
     "husky": "^7.0.4",
+    "jest": "^27.3.1",
     "prettier": "2.4.1"
   }
 }

@@ -87,7 +87,7 @@ const textToHTML = async (path, lang) => {
 };
 
 //This function will call when .md is input
-const markdownToHTML = async (path, lang) => {
+const markdownToHTML = async (path, lang = `en-CA`) => {
   let document = `<!doctype html><html lang="${lang}"><head><meta charset="utf-8"><title>Filename</title><meta name="viewport" content="width=device-width, initial-scale=1"></head><body>`;
 
   try {
@@ -140,4 +140,7 @@ const main = (path, output, lang) => {
 module.exports = {
   main,
   addDirectory,
+  markdownToHTML,
+  writeFile,
+  textToHTML,
 };

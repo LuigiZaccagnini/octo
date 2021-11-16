@@ -136,10 +136,6 @@ dir1
 
 .tern-port
 
-# Folder With Testing Data
-
-test/
-
 # Random Gen File
 
 .DS_Store
