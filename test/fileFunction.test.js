@@ -21,11 +21,11 @@ ff.markdownToHTML('test/markdownTest.md', 'It').then(html => {
 });
 
 test('Checks if it lineChecker filter without first line', () => {
-  expect(ff.lineChecker('Hello World', false)).toBe('<p>Hello World</p>');
+  expect(ff.lineChecker('Hello World', false)).toBe('<p>hello World</p>');
 });
 
 test('Checks if it lineChecker filter with first line', () => {
-  expect(ff.lineChecker('Hello World', true)).toBe('<h1>Hello World</h1>');
+  expect(ff.lineChecker('Hello World', true)).toBe('<h1>hello World</h1>');
 });
 
 test('Checks if it lineChecker filters a empty line', () => {
