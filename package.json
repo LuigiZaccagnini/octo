@@ -34,11 +34,14 @@
   },
   "homepage": "https://github.com/LuigiZaccagnini/octo#readme",
   "dependencies": {
-    "boxen": "4.0",
+    "boxen": "^4.2.0",
     "chalk": "2.4",
+    "enzyme": "^3.9.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "react-test-renderer": "^17.0.2",
-    "showdown": "^1.9.1",
-    "yargs": "13.2"
+    "showdown": "^1.9.0",
+    "yargs": "^17.2.1"
   },
   "devDependencies": {
     "eslint": "^8.1.0",
