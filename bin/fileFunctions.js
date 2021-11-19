@@ -143,4 +143,5 @@ module.exports = {
   markdownToHTML,
   writeFile,
   textToHTML,
+  lineChecker,
 };
