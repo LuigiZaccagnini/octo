@@ -20,6 +20,13 @@ ff.markdownToHTML('test/markdownTest.md', 'It').then(html => {
   });
 });
 
+it('TEXT to HTML renders correctly', () => { 
+ff.textToHTML('test/testing.txt').then(html => {
+  const tree = ReactTestRenderer.create(html).toJSON();
+  expect(tree).toBeTruthy();
+  });
+});
+
 test('Checks if it lineChecker filter without first line', () => {
   expect(ff.lineChecker('Hello World', false)).toBe('<p>Hello World</p>');
 });
