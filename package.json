@@ -27,7 +27,7 @@
     "site",
     "generator"
   ],
-  "author": "Luigi Zaccagnini",
+  "author": "Luigi Zaccagnini <contact@luigizaccagnini.com> (https://luigizaccagnini.com/)",
   "license": "GPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/LuigiZaccagnini/octo/issues"
