@@ -2,10 +2,19 @@
 
 A tool that allows you to generate static sites based off of text data and markdown.
 
-## Package Install
+## Install
+
+### Package Install Windows
 
 - Make sure you have [Node LTS](https://nodejs.org/en/download/) downloaded.
-- Run `npm i octo-ssg`.
+- Run `npm i octo-ssg -g` terminal/powershell/cmd.
+- Start using Octo!
+
+### Package Install Mac & Linux
+
+- Make sure you have [Node LTS](https://nodejs.org/en/download/) downloaded.
+- Run `npm i octo-ssg` in terminal/powershell/cmd.
+- Start using Octo!
 
 ## Features
 
