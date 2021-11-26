@@ -1,17 +1,11 @@
 # Octo
 
-A tool that allows you to generate static sites based off of text data.
+A tool that allows you to generate static sites based off of text data and markdown.
 
-## Tool Setup
+## Package Install
 
-### Global
-
-This builds Octo so you can access it anywhere on your computer using the `octo` command.
-
-- Clone the repository
-- `cd` into the folder
-- run `npm i` to install all dependencies
-- run `npm install -g .`
+- Make sure you have [Node LTS](https://nodejs.org/en/download/) downloaded.
+- Run `npm i octo-ssg`.
 
 ## Features
 
